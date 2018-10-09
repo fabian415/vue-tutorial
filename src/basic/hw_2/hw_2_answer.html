@@ -1,0 +1,164 @@
+<html>
+<head>
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" id="bootstrap-css" rel="stylesheet" />
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqBwAE7ohG73Zmbo-h1z3OJ_4n5q6HYek&libraries=places&v=3.exp&language=zh-TW"></script>
+    <script src="../../../assets/js/vue.min.js"></script>
+    <script src="../../../assets/js/lodash.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h2>Calculate the Distance Between two Addresses demo</h2>
+                </div>
+    
+                <div class="col-md-6">
+                    <form id="distance_form">
+                        <div class="form-group">
+                            <label>Origin: </label>
+                            <input class="form-control" id="from_places" placeholder="Enter a location" v-model.trim="from_places"/>
+                            <div style="color: red;" v-show="from_places_error">請至少輸入兩個字</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Destination: </label> 
+                            <input class="form-control" id="to_places" placeholder="Enter a location"  v-model.trim="to_places"/>
+                            <div style="color: red;"  v-show="to_places_error">請至少輸入兩個字</div>
+                        </div>
+                        <input class="btn btn-primary" id="calculate" ref="calculateBtn" type="button" value="Calculate" disabled @click="calculate"/>
+                    </form>
+                    <div ref="error_msg" style="display: none; color: red;">錯誤！訊息如下：<span></span></div>
+                    <div id="result">
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">Distance In Meter:  <span id="dist-meter">{{dist_meter}}</span></li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">Distance is Kilo: <span id="dist-kilo">{{dist_kilo}}</span></li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">IN MINUTES: <span id="duration-mins">{{duration_mins}}</span></li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">FROM: <span id="from">{{from}}</span></li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">TO: <span  id="to">{{to}}</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var data = {
+			from_places: '',
+            to_places: '',
+            from_places_error: false,
+            to_places_error: false,
+            distance: 0.0,
+            duration: 0.0,
+            from: '',
+            to: '',
+		};
+
+		var app = new Vue({
+			el:'#app',
+			data: data,
+            computed: {
+                dist_meter: function(){
+                    return this.addCommas(this.distance) + '公尺';
+                },
+                dist_kilo: function(){
+                    return Number((this.distance/1000).toFixed(2)) + '公里';
+                },
+                duration_mins: function(){
+                    return Number((this.duration/60).toFixed(2)) + '分鐘';
+                },
+            },
+            watch: {
+                from_places: function(val, old){
+                    this.clear();
+                    this.from_places_error = (val && val.length < 2) ? true: false;
+                    this.enableBtn();
+                },
+                to_places: function(val, old){
+                    this.clear();
+                    this.to_places_error = (val && val.length < 2) ? true: false;
+                    this.enableBtn();
+                },
+            },
+            methods: {
+                clear: function(){
+                    this.distance = 0.0;
+                    this.duration = 0.0;
+                    this.from = '';
+                    this.to = '';
+                    this.$refs.error_msg.style.display = "none";
+                },
+                enableBtn: function(){
+                    if(this.from_places.length >= 2 && this.to_places.length >=2){
+                        this.$refs.calculateBtn.disabled = false;
+                    } else {
+                        this.$refs.calculateBtn.disabled = true;
+                    }
+                },
+                calculate: _.debounce(function(){
+                    var that = this;
+                    var request = {
+                        origin: this.from_places,
+                        destination: this.to_places,
+                        travelMode: google.maps.DirectionsTravelMode.DRIVING
+                    };
+                    var directionsService = new google.maps.DirectionsService();
+                    directionsService.route(request, function (response, status) {
+                        var dist = 0.0;
+                        var duration = 0.0;
+                        var start_address = '';
+                        var end_address = '';
+                        if (status == google.maps.DirectionsStatus.OK) {
+                            console.log(response.routes);
+                            var route = response.routes[0];
+                            for (var i = 0; i < route.legs.length; i++) {
+                                dist += parseFloat(route.legs[i].distance.value);
+                                duration += parseFloat(route.legs[i].duration.value);
+                                if(i !== route.legs.length - 1 ){
+                                    start_address += route.legs[i].start_address + ', ';
+                                    end_address += route.legs[i].end_address + ', ';
+                                } else {
+                                    start_address += route.legs[i].start_address;
+                                    end_address += route.legs[i].end_address;
+                                }
+                            }
+                            that.distance = dist;
+                            that.duration = duration;
+                            that.from = start_address;
+                            that.to = end_address;
+                        } else {
+                            that.$refs.error_msg.style.display = "block";
+                            that.$refs.error_msg.getElementsByTagName("span")[0].innerHTML = response.status; 
+                        }
+                    });
+                }, 500),
+                addCommas(val) { 
+                    //根據`.`作為分隔，將val值轉換成一個數組 
+                    var aIntNum = val.toString().split('.'); 
+                    // 整數部分 
+                    var iIntPart = aIntNum[0]; 
+                    // 小數部分（傳的值有小數情況之下） 
+                    var iFlootPart = aIntNum.length > 1 ? '.' + aIntNum[1] : ''; 
+                    var rgx = /(\d+)(\d{3})/; 
+                    // 如果整數部分位數大於或等於5 
+                    if (iIntPart.length >= 5) { 
+                        // 根據正則要求，將整數部分用逗號每三位分隔 
+                        while (rgx.test(iIntPart)) { 
+                            iIntPart = iIntPart.replace(rgx, '$1' + ',' + '$2'); 
+                        } 
+                    } // 如果小數部分位數大於或等於5 
+                    if (iFlootPart && iFlootPart.length >= 5) { 
+                        // 根據正則要求，將小數部分用每三位分隔按空格號分開 
+                        while (rgx.test(iFlootPart)) { 
+                            iFlootPart = iFlootPart.replace(/(\d{3})/g, '$1 '); 
+                        } 
+                    }
+                    // 將整數部分和小數組部分合並在一起，並返回 
+                    return iIntPart + iFlootPart; 
+                }
+            }
+		});
+    </script>
+</body>
+</html>

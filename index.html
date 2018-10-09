@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vue教學文件</title>
+</head>
+<body>
+	<h3>Git教學</h3>
+	<hr>
+	<ol>
+		<li>安装Git，輸入命令 git --version，測試是否安裝成功？</li>
+		<li>移動到專案底下的資料夾，將專案資料夾建立成 git repository，輸入命令 git init</li>
+		<li>在專案下建立.gitignore檔，把不要上git的檔案填入</li>
+		<li>登入github網站 https://github.com/，建立一個新的專案叫vue-tutorial</li>
+		<li>輸入命令 git remote add origin git@gitlab.com:fabian415/vue-tutorial.git</li>
+		<li>輸入命令 git add .</li>
+		<li>輸入命令 git commit -m "Init project"</li>
+		<li>輸入命令 git push -u origin master</li>
+	</ol>
+	<h3>live-server install</h3>
+	<hr>
+	<ol>
+		<li>首先需要安装Node.js，相信童鞋們都已經裝過了，没装的童鞋趕緊去下載安装。</li>
+		<li>打開命令列，輸入命令 npm i live-server -g</li>
+		<li>建置專案，輸入命令 npm init</li>	
+		<li>然后輸入命令 live-sever 啟動</li>
+	</ol>
+	<h3>Vue Basic</h3>
+	<hr>
+	<ol>
+		<li><a href="https://cn.vuejs.org/v2/api/#%E6%8C%87%E4%BB%A4"> Vue 官方的API </a></li>
+		<li><a href="./src/basic/L1_hello_world_old.html">Hello World (Javascript)</a></li>
+		<li><a href="./src/basic/L1_hello_world_vue.html">Hello World (Vue)</a></li>
+		<li><a href="./src/basic/L2_v-if.html">v-if</a></li>
+		<li><a href="./src/basic/L2_v-show.html">v-show</a></li>
+		<li>
+			<a href="./src/basic/L3_v-model.html">v-model</a> |
+			<a href="./src/basic/L3_v-model_v2.html">v-model</a>
+		</li>
+		<li><a href="./src/basic/L4_v-for.html">v-for</a></li>
+		<li><a href="./src/basic/L5_v-on.html">v-on</a></li>
+		<li><a href="./src/basic/L5_methods.html">methods</a></li>
+		<li><a href="./src/basic/L6_lifecycle.html">Vue lifecycle</a></li>
+	</ol>
+	Homework 1:
+	<ul>
+		<li>成品：<a href="./src/basic/hw_1/hw_1_example.html">To do list</a></li>
+		<li>作業：<a href="./src/basic/hw_1/hw_1.html">下載</a></li>
+		<li>解答：<a href="./src/basic/hw_1/hw_1_answer.html">下載</a></li>
+	</ul>
+	<ol>
+		<li><a href="./src/basic/L7_computed.html">computed</a> | <a href="./src/basic/L7_computed_v2.html">computed</a> | <a href="./src/basic/L7_computed_v3.html">computed</a></li>
+		<li>
+			<a href="./src/basic/L7_computed_vs_methods.html">methods vs computed</a><br>
+			methods: 如果 data 內容如果一樣就還是會全部重算<br>
+			computed: 裡面有牽動到 data 才會跟著更換<br>
+			computed 無法帶參數，methods 可以<br>
+			不確定每次都會更新，請用 computed <br>
+			確定每次都會更新，就用 methods <br>
+		</li>
+		<li><a href="./src/basic/L8_watch.html">watch</a></li>
+		<li><a href="./src/basic/L8_watch_computed.html">watch vs computed</a></li>
+		watch: <br> 
+		   * watch 需手動設置初始值 <br>
+		   * watch其相依的屬性有幾個，就得多幾個 watcher 監聽 <br>
+		   * 它的彈性讓你很容易針對資料異動設callback
+		<li><a href="./src/basic/L8_watch_lodash.html">query API with lodash</a></li>
+		總結： <br>
+		* computed: 適合處理一些數據格式，比如時間格式的轉換，字符串的截取等。<br>
+		* watch: 處理比較複雜的事件或是大邏輯，如允許我們執行異步操作（訪問一個API），限制我們執行該操作的頻率，
+		並在我們得到最終結果前，設置中間狀態。 <br>
+		* methods: 要執行的函式，跟以上兩者無關。<br>
+	</ol>
+	 
+	Homework 2: 利用Google API，查出兩地的導航距離。<br>
+	要求：<br>
+	＊所有的數字都需要四捨五入到小數點第二位，且附上單位<br>
+	＊輸入框要驗證<br>
+	＊記得要lodash<br>
+	<ul>
+		<li>成品：<a href="./src/basic/hw_2/hw_2_example.html">Distance between two places</a></li>
+		<li>作業：<a href="./src/basic/hw_2/hw_2.html">下載</a></li>
+		<li>解答：<a href="./src/basic/hw_2/hw_2_answer.html">下載</a></li>
+	</ul>   
+
+
+</body>
+</html>

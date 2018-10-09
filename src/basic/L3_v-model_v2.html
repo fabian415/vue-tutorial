@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>L3_v-model_v2</title>
+	<script src="../../assets/js/vue.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		<h2>你考幾分呢？</h2>
+		<input type="text" v-model="score">
+		<div v-if="score >= 60">很棒，你及格了！</div>
+		<div v-else="score <= 60">不及格！</div>
+	</div>
+	<script type="text/javascript">
+		var data = {
+			message : 'Hello World！',
+			score: 0,
+		};
+
+		var app = new Vue({
+			el:'#app',
+			data: data
+		});
+
+		// Vue 官方的ＡＰＩ：https://cn.vuejs.org/v2/api/#%E6%8C%87%E4%BB%A4
+	</script>
+</body>
+</html>

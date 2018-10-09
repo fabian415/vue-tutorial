@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>L5_methods</title>
+	<script src="../../assets/js/vue.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		{{price}}
+		<input type="button" value="點擊扣十元" v-on:click="sell">
+	</div>
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el:'#app',
+			data:{
+				price: 100
+			},
+			methods:{
+				sell: function(){
+				  this.price -= 10;
+				}
+			}
+		});	
+
+		// this concept: this 是執行 function 時的對象
+		var home = {
+		  father: 'tom',
+		  findFather: function(){
+		    console.log(this.father);
+		  }
+		}
+		console.log(this);
+		home.findFather();	
+	</script>
+</body>
+</html>

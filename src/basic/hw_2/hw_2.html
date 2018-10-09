@@ -1,0 +1,44 @@
+<html>
+<head>
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" id="bootstrap-css" rel="stylesheet" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqBwAE7ohG73Zmbo-h1z3OJ_4n5q6HYek&libraries=places&v=3.exp&language=zh-TW"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="jumbotron">
+                <h2>Calculate the Distance Between two Addresses demo</h2>
+            </div>
+
+            <div class="col-md-6">
+                <form id="distance_form">
+					<div class="form-group">
+						<label>Origin: </label>
+						<input class="form-control" id="from_places" placeholder="Enter a location" />
+						<div style="color: red; display: none;">請至少輸入兩個字</div>
+					</div>
+					<div class="form-group">
+						<label>Destination: </label> 
+						<input class="form-control" id="to_places" placeholder="Enter a location" />
+						<div style="color: red; display: none;">請至少輸入兩個字</div>
+					</div>
+					<input class="btn btn-primary" id="calculate" type="button" value="Calculate" disabled/>
+				</form>
+				<div id="error-msg" style="display: none; color: red;">錯誤！訊息如下：<span></span></div>
+                <div id="result">
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">Distance In Meter:  <span id="dist-meter"></span></li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">Distance is Kilo: <span id="dist-kilo"></span></li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">IN MINUTES: <span id="duration-mins"></span></li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">FROM: <span id="from"></span></li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">TO: <span  id="to"></span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

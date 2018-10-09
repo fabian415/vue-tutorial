@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>L7_computed_v2</title>
+  <script src="../../assets/js/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h2>台幣匯率轉換計算機</h2>
+        輸入台幣：<input type="text" v-model.number="NT"> 
+        <ul>
+            <li>日幣：{{ japan }}</li>
+            <li>美金：{{ US }}</li>   
+        </ul> 
+    </div>
+    <script>
+        var data = {
+            NT:10
+        };
+
+        var app = new Vue({
+            el:'#app',
+            data: data,
+            computed:{
+                japan: function(){
+                    return 'JP '+this.NT*0.2713
+                },
+                US: function(){
+                    return 'US '+this.NT*30.687
+                }
+            }
+        });
+    </script>
+</body>
+</html>

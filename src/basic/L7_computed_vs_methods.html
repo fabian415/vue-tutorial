@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>L7_computed_vs_methods</title>
+  <script src="../../assets/js/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        computed 現在時間: {{ now }} 
+        <br>
+        methods 現在時間: {{ now2 }}
+        <br>
+        路人A體脂肪：<input type="text" v-model="a">
+        <br>
+        路人B體脂肪：<input type="text" @keyup="changeNow">
+
+    </div>
+    
+    <script>
+        var data = {
+            a:0, b: 0, now2: ''
+        };
+        var app = new Vue({
+            el:'#app',
+            data:data,
+            computed:{
+                now: function () {
+                    let total = this.a;
+                    return new Date();
+                }
+            },
+            methods: {
+                changeNow: function(){
+                    this.now2 = new Date();
+                }
+            }
+        });    
+    </script>
+</body>
+</html>

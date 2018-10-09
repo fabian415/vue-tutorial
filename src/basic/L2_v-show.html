@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>L2_v-show</title>
+	<script src="../../assets/js/vue.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		<div v-show="loading">訊息正在載入...</div>
+		<div v-show="!loading">{{ msg }}</div> 
+	</div>
+	<script type="text/javascript">
+		var data = {
+			msg : 'Hello World！',
+			loading: true
+		};
+
+		var app = new Vue({
+			el:'#app',
+			data: data
+		});
+
+		setTimeout(function(){
+			data.loading = false;
+		}, 2000);
+	</script>
+</body>
+</html>

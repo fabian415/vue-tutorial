@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>L8_watch_lodash</title>
+    <script src="../../assets/js/vue.min.js"></script>    
+    <script src="../../assets/js/axios.min.js"></script>
+    <script src="../../assets/js/lodash.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>Ask a yes/no question: <input v-model="question"></p>
+        <p>{{ answer }}</p>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                question: '',
+                answer: 'I cannot give you an answer until you ask a question!'
+            },
+            watch: {
+                question: function (newQuestion) { // whenever question changes, this function will run
+                    this.answer = 'Waiting for you to stop typing...'
+                    this.getAnswer();
+                }
+            },
+            methods: {
+                getAnswer: _.debounce(function () { // 創建一個防抖動函數。 該函數會再 wait 豪苗後開始調用 func 方法。
+                    if (this.question.indexOf('?') === -1) {
+                        this.answer = 'Questions usually contain a question mark. ;-)'
+                        return;
+                    }
+                    this.answer = 'Thinking...';
+                    var vm = this;
+                    axios.get('https://yesno.wtf/api').then(function (res) {
+                        vm.answer = _.capitalize(res.data.answer); // 轉換字符串首字母為大寫，剩下為小寫。
+                    }).catch(function (error) {
+                        vm.answer = 'Error! Could not reach the API. ' + error
+                    });
+                }, 500),
+            }
+        });    
+    </script>
+</body>
+</html>

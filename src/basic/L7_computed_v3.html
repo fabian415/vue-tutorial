@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>L7_computed_v3</title>
+  <script src="../../assets/js/vue.min.js"></script>
+  <script src="../../assets/js/moment.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h2>日期時間</h2>
+        輸入時間：<input type="datetime-local" v-model="start_time"> 
+        <ul>
+            <li>{{ product.start_time }}</li>
+        </ul> 
+    </div>
+    <script>
+        var data = {
+            product: {
+                start_time: moment(),
+            }
+        };
+
+        var app = new Vue({
+            el:'#app',
+            data: data,
+            computed:{
+                start_time: {
+                    get: function(){ // 預設只有getter
+                        return moment(this.product.start_time).format('YYYY-MM-DDTHH:mm:ss');
+                    },
+                    set: function(val){
+                        this.product.start_time = moment(val, 'YYYY-MM-DDTHH:mm:ss');
+                    }
+                },
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>L3_v-model</title>
+	<script src="../../assets/js/vue.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		<input type="text" v-model="msg">
+		<div>{{ msg }}</div>
+		<hr> 多選按鈕
+		<input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+		<label for="jack">Jack</label>
+		<input type="checkbox" id="john" value="John" v-model="checkedNames">
+		<label for="john">John</label>
+		<input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+		<label for="mike">Mike</label>
+		<br>
+		<span>Checked names: {{ checkedNames }}</span>
+		<hr> Radio按鈕
+		<input type="radio" id="one" value="One" v-model="picked">
+		<label for="one">One</label>
+		<input type="radio" id="two" value="Two" v-model="picked">
+		<label for="two">Two</label>
+		<br>
+		<span>Picked: {{ picked }}</span>
+		<hr> select選單
+		<select v-model="selected">
+			<option>A</option>
+			<option>B</option>
+			<option>C</option>
+		</select>
+		<span>Selected: {{ selected }}</span>
+	</div>
+	<script type="text/javascript">
+		var data = {
+			msg: 'Hello World！',
+			checkedNames: [],
+			picked: '',
+			selected: 'A'
+		};
+
+		var vue = new Vue({
+			el:'#app',
+			data: data
+		});
+
+		// Vue 官方的ＡＰＩ：https://cn.vuejs.org/v2/api/#%E6%8C%87%E4%BB%A4
+	</script>
+</body>
+</html>

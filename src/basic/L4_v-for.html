@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>L4_v-for</title>
+	<script src="../../assets/js/vue.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <h2>顏色列表</h2>
+    <ul>
+      <li v-for="color in colors">
+        {{color}}
+      </li>
+    </ul>
+   
+    <h2>各家庭的父親</h2>
+    <ul>
+      <li v-for="home in homes">
+        {{home.father}}
+      </li>
+    </ul>
+  </div>
+
+  <script type="text/javascript">
+    var data = {
+        colors : ['blue','red','black'],
+        homes:[
+          {father:'tom'},
+          {father:'bob'},
+          {father:'john'}
+        ]
+    };
+    var app = new Vue({
+      el:'#app',
+      data: data
+    });
+  </script>
+</body>
+</html>
